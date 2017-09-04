@@ -3,12 +3,17 @@ import wx
 wildcard="Excel 97-2003 Workbook (*.xls)|*.xls|Excel Workbook (*.xlsx)|*.xlsx"
 
 def filelisttodict(filelist):
-    i=filelist.lenth()
+    i=len(filelist)
     j=0
+    filedict={}
     for element in filelist:
         filedict[j]=element
         j+=1
     return filedict
+
+class filelistctrl(wx.ListCtrl):
+    def __init__(self, parent, ID, pos, size, style):
+        wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
 
 class panelup(wx.Panel):
     def __init__(self,parent):
@@ -30,7 +35,9 @@ class panelup(wx.Panel):
         openfile_dlg=wx.FileDialog(self,message="choose file",wildcard=wildcard,style=wx.FD_OPEN | wx.FD_MULTIPLE|wx.FD_CHANGE_DIR|wx.FD_FILE_MUST_EXIST)
         if openfile_dlg.ShowModal()==wx.ID_OK:
             paths=openfile_dlg.GetPaths()
-            print(paths)
+            data=filelisttodict(paths)
+            filelist=filelistctrl(self,pos=(20,10),ID=-1,style=wx.LC_REPORT,size=(30,20))
+            filelist.InsertColumn(0,paths)
         openfile_dlg.Destroy()
 
 
