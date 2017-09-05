@@ -14,7 +14,11 @@ def filelisttodict(filelist):
 class filelistctrl(wx.ListCtrl):
     def __init__(self, parent, ID, pos, size, style):
         wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
-
+    def PopulateList(self,data):
+        self.InsertColumn(0,"File")
+        items=data.items()
+        for key,item in items:
+            index=self,list.InsertItem()
 class panelup(wx.Panel):
     def __init__(self,parent):
         wx.Panel.__init__(self,parent,-1)
